@@ -1,5 +1,5 @@
 from django.db import models
-from data.table import Signup
+from data import table
 
 # Create your models here.
  
