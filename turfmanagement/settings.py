@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'turfmanagement.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'deena',
+#         'NAME': 'turfmanagement',
 #         'USER': 'root',
-#         'PASSWORD': 'root123',
-#         'HOST': 'localhost',
+#         'PASSWORD': 'mysqllocal',
+#         'HOST': 'localhost',   
 #         'PORT': '3306',
 #     }
 # }
