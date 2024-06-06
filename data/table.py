@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, Enum, Date, DECIMAL, Text, ForeignKey, BLOB
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
+from .sqlalchemy_config import DATABASE_URL
 
 Base = declarative_base()
 
@@ -119,15 +120,15 @@ class Equipment(Base):
     turfDetails = relationship("TurfDetails")
 
 # Create an engine
-engine = create_engine('mysql://root:mysqllocal@localhost:3306/turfmanagement')
+engine = create_engine(DATABASE_URL)
 
 # Create all tables
-Base.metadata.create_all(engine)
+Base.metadata.create_all(engine)  
 
 # Create a session
 Session = sessionmaker(bind=engine)
 session = Session()
-
+    
 # Commit the changes   
 session.commit()
 

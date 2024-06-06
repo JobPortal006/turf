@@ -2,13 +2,12 @@ from .table import User, session
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .cognito_utils import authenticate_user, get_user_attributes
 
 @csrf_exempt
 def login_data(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        email = data.get('email')
+        email = data.get('email')    
         password = data.get('password')
         print(email,password)
         try:
@@ -21,3 +20,4 @@ def login_data(request):
         finally:
             session.close()
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+  

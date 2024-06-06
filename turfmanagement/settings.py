@@ -27,10 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.1.45']
 
-AWS_COGNITO_USER_POOL_ID = 'your_user_pool_id'
-AWS_COGNITO_APP_CLIENT_ID = 'your_app_client_id'
-AWS_COGNITO_REGION = 'your_region'
-
 # Application definition
 
 INSTALLED_APPS = [

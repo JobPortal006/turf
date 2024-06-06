@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
 
-DATABASE_URI = 'mysql://root:mysqllocal@localhost/turfmanagement'
+DATABASE_URL = 'mysql://root:mysqllocal@localhost/turfmanagement'
 
-engine = create_engine(DATABASE_URI)
+engine = create_engine(DATABASE_URL)   
