@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6%_epuo^5=_*@ep&2&%&)^pf440=s!p!m-7c#3)d9+yij&*awn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.45']
+ALLOWED_HOSTS = ['192.168.1.45','192.168.1.49']
 
 # Application definition
 
@@ -49,7 +49,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'turfmanagement.urls'
+# ROOT_URLCONF = 'turfmanagement.userRegisterUrl'
+ROOT_URLCONF = 'turfmanagement.url.userRegisterUrl'  
+
 
 TEMPLATES = [
     {
@@ -73,16 +75,16 @@ WSGI_APPLICATION = 'turfmanagement.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'turfmanagement',
-#         'USER': 'root',
-#         'PASSWORD': 'mysqllocal',
-#         'HOST': 'localhost',   
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'turfmanagement',
+        'USER': 'root',
+        'PASSWORD': 'root123',
+        'HOST': 'localhost',   
+        'PORT': '3306',
+    }
+}
 
 
 # Password validation

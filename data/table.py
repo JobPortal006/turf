@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, Enum, Date, DECIMAL, Text, ForeignKey, BLOB
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
-from .sqlalchemy_config import DATABASE_URL
+from .sqlalchemyConfig import DATABASE_URL
 
 Base = declarative_base()
 
@@ -14,11 +14,11 @@ class User(Base):
     __tablename__ = 'user'
     userId = Column(Integer, primary_key=True, autoincrement=True)
     roleId = Column(Integer, ForeignKey('role.roleId'), nullable=False)
-    userName = Column(String(50))
-    password = Column(String(50))
-    email = Column(String(100))
+    userName = Column(String(50), nullable=True)
+    password = Column(String(50), nullable=True)
+    email = Column(String(100),nullable=True)
     profilePhoto = Column(BLOB)
-    mobileNumber = Column(String(15))
+    mobileNumber = Column(String(15) , nullable=True)
     
     role = relationship("Role")
 
