@@ -1,7 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
-from data.model.userRegisterModel import userRegisterQuery
+from data.model.userRegisterModel import userRegisterView
 
 @csrf_exempt
 def userRegisters(request):
@@ -9,7 +9,8 @@ def userRegisters(request):
         if request.method == 'POST':
             data = json.loads(request.body)
             mobileNumber = data.get('mobileNumber')
-            response = userRegisterQuery(mobileNumber)
+            roleName = "User"
+            response = userRegisterView(mobileNumber,roleName)
             
             response_data = {"Response": response}
             

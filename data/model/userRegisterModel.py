@@ -1,19 +1,28 @@
-from django.http import JsonResponse
+from data.table.table import Session, User, Role
 
-from django.db import connection
-cursor = connection.cursor()
-
-def userRegisterQuery(mobilenumber):
+def userRegisterView(mobileNumber, roleName):
     try:
-        id = 1
-        # sql = "INSERT INTO user(roleid, username, password, email, mobilenumber) VALUES (%s, %s, %s, %s, %s)"
-        sql = "INSERT INTO user(roleid, mobilenumber) VALUES (%s, %s)"
+        session = Session()
+
+        # Check if the role exists
+        role = session.query(Role).filter_by(role=roleName).first()
+
+        if role is None:
+            # If role doesn't exist, create a new role
+            new_role = Role(role=roleName)
+            session.add(new_role)
+            session.commit()
+            roleId = new_role.roleId
+        else:
+            roleId = role.roleId
+
+        # Insert the new user with the retrieved or newly created roleId
+        new_user = User(roleId=roleId, mobileNumber=mobileNumber)
+        session.add(new_user)
+        session.commit()
         
-        values = (id,  mobilenumber)
-        print("---------------------------")
-        cursor.execute(sql, values)  # Assuming cursor is your MySQL cursor object
-        print("[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]")
-        return "Successfully inserted"
+        return True
     except Exception as e:
+        session.rollback()
         print(f"Error: {e}")
-        return "Error occurred during insertion"
+        return False

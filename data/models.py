@@ -1,5 +1,5 @@
 from django.db import models
-from data import table
+from data.table import table
 
 # Create your models here.
  

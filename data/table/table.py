@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, Enum, Date, DECIMAL, Text, ForeignKey, BLOB
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
-from .sqlalchemyConfig import DATABASE_URL
+from ..sqlalchemyConfig import DATABASE_URL
 
 Base = declarative_base()
 
