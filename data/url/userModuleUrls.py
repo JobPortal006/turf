@@ -17,4 +17,8 @@ urlpatterns = [
 
     # Endpoint for change password content
     path('changePasswordContent/', changePasswordContent.getChangePasswordFields, name='changePasswordContent'),
+
+    path('userRegisterSelect/',userRegisterView.userRegisterSelect),
+    path('userRegisterUpdate/',userRegisterView.userRegisterUpdate),
+    path('userRegisterDelete/',userRegisterView.userRegisterDelete),
 ]
