@@ -1,5 +1,10 @@
 from sqlalchemy import create_engine
+from urllib.parse import quote_plus
 
-DATABASE_URL = 'mysql://user:Skein@2020@demo.emeetify.com/turf_management'
+user = "user"
+password = "Skein@2020"
+encoded_password = quote_plus(password)
+DATABASE_URL = f'mysql://{user}:{encoded_password}@demo.emeetify.com/turf_management'
 
-engine = create_engine(DATABASE_URL)  
+# Create the engine
+engine = create_engine(DATABASE_URL)

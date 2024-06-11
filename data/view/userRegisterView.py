@@ -1,8 +1,8 @@
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
-from data.model.userRegisterModel import userRegisterQuery
-from data.model.userRegisterModel import userRegisterInsertQuery ,userRegisterSelectQuery,userRegisterUpdateQuery,userRegisterDeleteQuery
+# from data.model.userRegisterModel import userRegisterQuery
+from data.model.userRegisterModel import userRegisterInsertQuery ,userRegisterSelectQuery
 from data import message 
 # Insert ----------------------> 
 @csrf_exempt
@@ -57,17 +57,21 @@ def userRegisterSelect(request):
     
 #  Upadate ------------>        
 
-@csrf_exempt
-def userRegisterUpdate(request):
-    try:
-        if request.method == 'PUT':
-            data = json.loads(request.body)
-            userName = data.get('userName')
-            mobileNumber = data.get('mobileNumber')
-            response = userRegisterQuery(mobileNumber)
+# @csrf_exempt
+# def userRegisterUpdate(request):
+#     try:
+#         if request.method == 'PUT':
+#             data = json.loads(request.body)
+#             userName = data.get('userName')
+#             mobileNumber = data.get('mobileNumber')
+#             response = userRegisterQuery(mobileNumber)
             
-            response_data = {"Response": response}
+#             response_data = {"Response": response}
             
-            return JsonResponse(response_data, safe=False)
-    except Exception as e:
-        return JsonResponse({"error": f"Register Exception: {str(e)}"}, safe=False)
+#             return JsonResponse(response_data, safe=False)
+#     except Exception as e:
+#         return JsonResponse({"error": f"Register Exception: {str(e)}"}, safe=False)
+
+
+
+

@@ -4,7 +4,7 @@ from data.content import loginContent, forgetPasswordContent, otpVerificationCon
 
 urlpatterns = [
     # Endpoint for user registration
-    path('userRegisters/', userRegisterView.userRegisters, name='userRegisters'),
+    # path('userRegisters/', userRegisterView.userRegisters, name='userRegisters'),
 
     # Endpoint for login content
     path('loginContent/', loginContent.getLoginFields, name='loginContent'), 
@@ -19,6 +19,6 @@ urlpatterns = [
     path('changePasswordContent/', changePasswordContent.getChangePasswordFields, name='changePasswordContent'),
 
     path('userRegisterSelect/',userRegisterView.userRegisterSelect),
-    path('userRegisterUpdate/',userRegisterView.userRegisterUpdate),
-    path('userRegisterDelete/',userRegisterView.userRegisterDelete),
+    # path('userRegisterUpdate/',userRegisterView.userRegisterUpdate),
+    # path('userRegisterDelete/',userRegisterView.userRegisterDelete),
 ]
