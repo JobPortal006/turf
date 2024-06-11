@@ -17,7 +17,7 @@ class User(Base):
     userName = Column(String(50), nullable=True)
     password = Column(String(50), nullable=True)
     email = Column(String(100),nullable=True)
-    profilePhoto = Column(BLOB)
+    profilePhoto = Column(String(50),nullable=True)
     mobileNumber = Column(String(15) , nullable=True)
     
     role = relationship("Role")
@@ -30,6 +30,7 @@ class TurfType(Base):
 class TurfDetails(Base):
     __tablename__ = 'turfDetails'
     turfId = Column(Integer, primary_key=True, autoincrement=True)
+    courtName = Column(String(50), nullable=False)
     turfTypeId = Column(Integer, ForeignKey('turfType.turfTypeId'), nullable=False)
     turfAddress = Column(String(150), nullable=False)
     turfTimings = Column(String(50), nullable=False)

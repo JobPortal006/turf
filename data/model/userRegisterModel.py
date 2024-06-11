@@ -1,6 +1,6 @@
 from data.table.table import Session, User, Role
 
-def userRegisterView(mobileNumber, roleName):
+def userRegister(mobileNumber, roleName):
     try:
         session = Session()
 
