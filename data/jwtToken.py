@@ -1,34 +1,27 @@
-import jwt ,json
-from django.http import JsonResponse
-
+import jwt
 import datetime
 
-global secret_key
-secret_key = '1234'
+secret_key = 'turf123'
 
 # Encode ----- Token
 def jwtTokenEncode(userId, roleId, mobileNumber):
     try:
+        exp_time = datetime.datetime.utcnow() + datetime.timedelta(days=1)
+        # Convert the datetime object to a UNIX timestamp
+        exp_timestamp = int(exp_time.timestamp())
         # Construct the payload
         payload = {
             'userId': userId,
             'roleId': roleId,
             'mobileNumber': mobileNumber,
-            # 'iat': datetime.datetime.utcnow(),  # Issued at time
-            # 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # Expiration time (1 hour from now)
+            'exp': exp_timestamp
         }
-
         token = jwt.encode(payload, secret_key, algorithm='HS256')
         print("JWT:", token)
-
-        # Return the token
         return token
-
     except Exception as e:
         print(f"Unexpected error: {str(e)}")
         return {"error": f"Unexpected error: {str(e)}"}
-
-
 
 # Decode ----- Token
 def decodeToken(token):
