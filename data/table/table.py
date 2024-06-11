@@ -66,7 +66,7 @@ class UserTurfMapping(Base):
     user = relationship("User")
     turfDetails = relationship("TurfDetails")
 
-class Subscription(Base):
+class Subscription(Base): 
     __tablename__ = 'subscription'
     subscriptionId = Column(Integer, primary_key=True, autoincrement=True)
     turfId = Column(Integer, ForeignKey('turfDetails.turfId'), nullable=False)
@@ -78,7 +78,7 @@ class Subscription(Base):
     
     turfDetails = relationship("TurfDetails")
 
-class Bookings(Base):
+class Bookings(Base): 
     __tablename__ = 'bookings'
     bookingId = Column(Integer, primary_key=True, autoincrement=True)
     userId = Column(Integer, ForeignKey('user.userId'), nullable=False)

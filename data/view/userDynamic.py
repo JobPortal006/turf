@@ -1,8 +1,9 @@
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
-from data.model.userRegisterModel import userRegisterInsertQuery ,userRegisterSelectQuery,userRegisterUpdateQuery,userRegisterDeleteQuery
+from data.model.userQueryDynamic import userRegisterInsertDynamic
 from data import message 
+from turf.data import tablesFields
 
 
 # Insert ----------------------> 
@@ -11,13 +12,17 @@ def userDynamicInsert(request):
     try:
         if request.method == 'POST':
             data = json.loads(request.body)
+            roleType = "user"
             userName = data.get('userName')
-            mobileNumber = data.get('profilePhoto')
+            profilePhoto = data.get('profilePhoto')
             mobileNumber = data.get('mobileNumber')
             
-            check = message.check(userName,mobileNumber)
+            check = message.check(roleType,userName,mobileNumber,profilePhoto)
             if check == True:
-                response = userRegisterInsertQuery(mobileNumber,userName)
+                
+                roleTable = tablesFields.userRegisterRoleTable
+                userTable = tablesFields.userRegisterUserTable
+                response = userRegisterInsertDynamic(roleTable,userTable,roleType,userName,mobileNumber,profilePhoto)
                 
                 if response == False:
                     return message.response('Error','mobileError')
