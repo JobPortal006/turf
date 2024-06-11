@@ -22,6 +22,15 @@ class User(Base):
     
     role = relationship("Role")
 
+class UserSportsInterests(Base):
+    __tablename__ = 'userSportsInterests'
+    userSportsInterestsId = Column(Integer, primary_key=True, autoincrement=True)
+    userId = Column(Integer, ForeignKey('user.userId'), nullable=False)
+    gameTypeId = Column(Integer, ForeignKey('gameType.gameTypeId'), nullable=False)
+      
+    user = relationship("User")
+    gameType = relationship("GameType")
+
 class TurfType(Base):
     __tablename__ = 'turfType'
     turfTypeId = Column(Integer, primary_key=True, autoincrement=True)
