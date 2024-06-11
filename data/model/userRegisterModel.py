@@ -1,112 +1,95 @@
-from django.http import JsonResponse
-from data import message , jwtToken
+from sqlalchemy.orm import sessionmaker
+from data.table.table import engine, Role, User
+from data import message, jwtToken
 
-from django.db import connection
-from data import message 
+Session = sessionmaker(bind=engine)
 
-con = connection.cursor()
-
-def userRegisterInsertQuery(mobileNumber,userName):
+def userRegisterInsertQuery(mobileNumber, userName):
+    session = Session()
     try:
-        con = connection.cursor()
-        con.execute("select roleId from role where role = %s", ["user"])
-        result = con.fetchone()
-        roleId = result[0]
-        print("Role ID:", roleId)
-       
-        con.execute("select * from user where mobileNumber = %s", [mobileNumber])
-        userResult = con.fetchone()
-        if userResult:
+        role = session.query(Role).filter_by(role='user').first()
+        if not role: 
             return False
-            
+        
+        roleId = role.roleId
+        print("Role ID:", roleId)
+        
+        user = session.query(User).filter_by(mobileNumber=mobileNumber).first()
+        if user:
+            return False
         else:
-            sql = "INSERT INTO user(roleId, userName,  mobileNumber) VALUES (%s , %s, %s)"
-            values = (roleId,userName,mobileNumber)
-            con.execute(sql, values) 
-            userId = con.lastrowid
+            new_user = User(roleId=roleId, userName=userName, mobileNumber=mobileNumber)
+            session.add(new_user)
+            session.commit()
+            userId = new_user.userId
 
-            jwtTokenEn = jwtToken.jwtTokenEncode(userId,roleId,mobileNumber)
-             
-            con.close()
+            jwtTokenEn = jwtToken.jwtTokenEncode(userId, roleId, mobileNumber)
         return jwtTokenEn
     except Exception as e:
         print(f"Error: {e}")
-        con.close()
-        return message.handleSuccess( "Error occurred during insertion")
+        session.rollback()
+        return message.handleSuccess("Error occurred during insertion")
+    finally:
+        session.close()  
 
-# Select Query ----------------------
 def userRegisterSelectQuery(token):
+    session = Session()
     try:
-        con = connection.cursor()
-        
         jwtTokenDecode = jwtToken.decodeToken(token)
-       
-        
         userId = jwtTokenDecode['userId']
-        con.execute("select userId,roleId,mobileNumber from user where userId = %s", [userId])
-        result = con.fetchone()
-        if result:
+
+        user = session.query(User).filter_by(userId=userId).first()
+        if user:
             response = {
-                "userId": result[0],
-                "roleId": result[1],
-                "mobileNumber": result[2]
+                "userId": user.userId,
+                "roleId": user.roleId,
+                "mobileNumber": user.mobileNumber
             }
         else:
             return False
-        con.close()
         return response
-        
     except Exception as e:
-        con.close()
         return message.tryExceptError(str(e))
-    
-        
-def userRegisterUpdateQuery(userName,mobileNumber,token):
+    finally:
+        session.close()
+
+def userRegisterUpdateQuery(userName, mobileNumber, token):
+    session = Session()
     try:
-        con = connection.cursor()
-        print("1------------")
         jwtTokenDecode = jwtToken.decodeToken(token)
-        print("2------------")
-        
         userId = jwtTokenDecode['userId']
-        
-        sql = "UPDATE user SET userName = %s, mobileNumber = %s WHERE userId = %s"
-        values = (userName, mobileNumber, userId)
-        updateResult = con.execute(sql, values)
-        
-        if updateResult:
-            con.execute("select userId,roleId,mobileNumber from user where userId = %s", [userId])
-            selectResult = con.fetchone()
-            
-            userId, roleId, mobileNumber = selectResult
-            jwtTokenEncode = jwtToken.jwtTokenEncode(userId,roleId,mobileNumber)
-            return jwtTokenEncode
-            
-            
-        else:
+
+        user = session.query(User).filter_by(userId=userId).first()
+        if not user:
             return False
-            
-        
-        
+
+        user.userName = userName
+        user.mobileNumber = mobileNumber
+        session.commit()
+
+        jwtTokenEncode = jwtToken.jwtTokenEncode(user.userId, user.roleId, user.mobileNumber)
+        return jwtTokenEncode
     except Exception as e:
-        con.close()
+        session.rollback()
         return message.tryExceptError(str(e))
-        
-             
-# Delete Query ----------------------
+    finally:
+        session.close()
+
 def userRegisterDeleteQuery(token):
+    session = Session()
     try:
-        con = connection.cursor()
         jwtTokenDecode = jwtToken.decodeToken(token)
-        print("--------------------,.,.<>")
         userId = jwtTokenDecode['userId']
-        result = con.execute("DELETE FROM user WHERE userId = %s", [userId])
-        if result:
-            con.close()
-            return True
-        else:
-            con.close()
+
+        user = session.query(User).filter_by(userId=userId).first()
+        if not user:
             return False
+
+        session.delete(user)
+        session.commit()
+        return True
     except Exception as e:
-        con.close()
-        return message.tryExceptError(str(e))  
+        session.rollback()
+        return message.tryExceptError(str(e))
+    finally:
+        session.close()
