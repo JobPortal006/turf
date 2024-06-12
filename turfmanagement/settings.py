@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6%_epuo^5=_*@ep&2&%&)^pf440=s!p!m-7c#3)d9+yij&*awn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.45','192.168.1.49']
+ALLOWED_HOSTS = ['192.168.1.38','192.168.1.49']
 
 # Application definition
 
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'data'
 ]
 
@@ -47,7 +48,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-] 
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # ROOT_URLCONF = 'turfmanagement.userRegisterUrl'
 ROOT_URLCONF = 'turfmanagement.urls'  

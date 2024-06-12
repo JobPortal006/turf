@@ -1,4 +1,4 @@
-from .table.table import User, session
+from .table.table import Login, session
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -11,7 +11,7 @@ def login_data(request):
         password = data.get('password')
         print(email,password)
         try:
-            new_login = User(email=email, password=password)
+            new_login = Login(email=email, password=password)
             session.add(new_login)
             session.commit()
             return JsonResponse({'status': 'success', 'message': 'Login details stored successfully'})

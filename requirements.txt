@@ -3,3 +3,4 @@ SQLAlchemy===2.0.27
 mysqlclient===2.2.4
 pytest===8.0.0
 pytest-django===4.8.0
+django-cors-headers===4.3.1

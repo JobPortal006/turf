@@ -5,7 +5,7 @@ from ..view.userLoginView import userLogin
 
 urlpatterns = [
     # Endpoint for user registration
-   path('userLogin/',userLogin),
+   path('turfAdminLogin/',userLogin),
 
     path('userRegisters/', userRegisterView.userRegistersInsert, name='userRegistersInsert'),
 

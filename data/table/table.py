@@ -5,8 +5,14 @@ from ..sqlalchemyConfig import DATABASE_URL
 
 Base = declarative_base()
 
-class Role(Base):
-    __tablename__ = 'role'
+class Login(Base):
+    __tablename__ = 'login'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    email = Column(String(50), nullable=False)
+    password = Column(String(50), nullable=False)
+
+class Roles(Base):
+    __tablename__ = 'roles'
     roleId = Column(Integer, primary_key=True, autoincrement=True)
     role = Column(String(50), nullable=False)
 
@@ -21,6 +27,18 @@ class User(Base):
     mobileNumber = Column(String(15) , nullable=True)
     
     role = relationship("Role")
+
+class Location(Base):
+    __tablename__ = 'location'
+    locationId = Column(Integer, primary_key=True, autoincrement=True)
+    userId = Column(Integer, ForeignKey('user.userId'), nullable=False)
+    doorNo = Column(Integer, nullable=False)
+    street = Column(String(50), nullable=False)
+    city = Column(String(20),nullable=False)
+    state = Column(String(50),nullable=False)
+    pincode = Column(String(15) , nullable=False)
+
+    user = relationship("User")
 
 class UserSportsInterests(Base):
     __tablename__ = 'userSportsInterests'

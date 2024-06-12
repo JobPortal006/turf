@@ -2,8 +2,11 @@ from django.http import JsonResponse
 import os
 
 #dynamic success response
-def handleSuccess(success):
+def handleSuccessMessage(success):
     return JsonResponse({"status": True, "statusCode": 200, "message": success},safe=False)
+
+def handleSuccessData(success,data):
+    return JsonResponse({"status":True,"statusCode":200,"message":success,"data":data})
 
 #dynamic error response
 def errorResponse(error):
@@ -13,26 +16,28 @@ def errorResponse(error):
 def serverErrorResponse():
     return  JsonResponse({"status":False,"statusCode":500,"message":"Internal Server Error"})
 
-def response(val, key):
+def response(val, key,data):
     key_value_mapping = {
         'Success': {
-            'Signup': 'Signup Successfully',
-            'Login': 'Login Successfully',
-            'userDelete': 'Delete Successfully',
+            'login': 'Login Successfully',
+            'userDelete': 'Delete Successfully'
         },
         'Error': {
             'mobileError': 'Mobile Number already exists. Please use a different mobile number.',
+            'loginError':'Login failed',
             'noResult': 'No Result Found',
             'postMethod': 'Use the POST method',
             'putMethod': 'Use the PUT method',
             'getMethod': 'Use the GET method',
             'deleteMethod': 'Use the DELETE method',
-            'emptyValue':'Value is None',  
+            'emptyValue':'Value is None',
         }
     }
     
-    if val == 'Success':
-        return handleSuccess(key_value_mapping[val][key])
+    if val == 'Success' and data is not None:
+        return handleSuccessData(key_value_mapping[val][key],data)
+    elif val == 'Success' and data is None:
+        return handleSuccessMessage(key_value_mapping[val][key])
     else:
         return errorResponse(key_value_mapping[val][key])
 

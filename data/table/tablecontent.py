@@ -1,6 +1,6 @@
-TABLES = {
-    'user': {
-        'name': 'user',
+TABLES = [
+    {
+        'tableName': 'user',
         'columns': {
             'userId': 'userId',
             'roleId': 'roleId',
@@ -11,30 +11,30 @@ TABLES = {
             'mobileNumber': 'mobileNumber'
         }
     },
-    'role': {
-        'name': 'role',
+    {
+        'tableName': 'roles',
         'columns': {
             'roleId': 'roleId',
             'role': 'role'
         }
     },
-    'userSportsInterest': {
-        'name': 'userSportsInterest',
+    {
+        'tableName': 'userSportsInterest',
         'columns': {
-            'mappingId': 'userSportsInterestId',
+            'userSportsInterestId': 'userSportsInterestId',
             'userId': 'userId',
             'gameTypeId': 'gameTypeId'
         }
     },
-    'turfType': {
-        'name': 'turfType',
+    {
+        'tableName': 'turfType',
         'columns': {
             'turfTypeId': 'turfTypeId',
             'turfType': 'turfType'
         }
     },
-    'turfDetails': {
-        'name': 'turfDetails',
+    {
+        'tableName': 'turfDetails',
         'columns': {
             'turfId': 'turfId',
             'turfTypeId': 'turfTypeId',
@@ -44,15 +44,15 @@ TABLES = {
             'partitions': 'partitions'
         }
     },
-    'gameType': {
-        'name': 'gameType',
+    {
+        'tableName': 'gameType',
         'columns': {
             'gameTypeId': 'gameTypeId',
             'gameType': 'gameType'
         }
     },
-    'gameDetails': {
-        'name': 'gameDetails',
+    {
+        'tableName': 'gameDetails',
         'columns': {
             'gameId': 'gameId',
             'turfId': 'turfId',
@@ -63,16 +63,16 @@ TABLES = {
             'pricePerHour': 'pricePerHour'
         }
     },
-    'userTurfMapping': {
-        'name': 'userTurfMapping',
+    {
+        'tableName': 'userTurfMapping',
         'columns': {
             'mappingId': 'mappingId',
             'userId': 'userId',
             'turfId': 'turfId'
         }
     },
-    'subscription': {
-        'name': 'subscription',
+    {
+        'tableName': 'subscription',
         'columns': {
             'subscriptionId': 'subscriptionId',
             'turfId': 'turfId',
@@ -83,8 +83,8 @@ TABLES = {
             'status': 'status'
         }
     },
-    'bookings': {
-        'name': 'bookings',
+    {
+        'tableName': 'bookings',
         'columns': {
             'bookingId': 'bookingId',
             'userId': 'userId',
@@ -98,8 +98,8 @@ TABLES = {
             'bookingStatus':'bookingStatus'
         }
     },
-    'maintenanceSchedules': {
-        'name': 'maintenanceSchedules',
+    {
+        'tableName': 'maintenanceSchedules',
         'columns': {
             'scheduleId': 'scheduleId',
             'turfId': 'turfId',
@@ -110,8 +110,8 @@ TABLES = {
             'notes': 'notes'
         }
     },
-    'equipment': {
-        'name': 'equipment',
+    {
+        'tableName': 'equipment',
         'columns': {
             'equipmentId': 'equipmentId',
             'equipmentName': 'equipmentName',
@@ -122,4 +122,4 @@ TABLES = {
             'turfId': 'turfId'
         }
     }
-} 
+]

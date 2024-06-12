@@ -1,5 +1,5 @@
 from sqlalchemy.orm import sessionmaker
-from data.table.table import engine, Role, User
+from data.table.table import engine, Roles, User
 from data import message, jwtToken
 
 Session = sessionmaker(bind=engine)
@@ -7,7 +7,7 @@ Session = sessionmaker(bind=engine)
 def userRegisterInsertQuery(mobileNumber, userName):
     session = Session()
     try:
-        role = session.query(Role).filter_by(role='user').first()
+        role = session.query(Roles).filter_by(role='user').first()
         if not role: 
             return False
         
