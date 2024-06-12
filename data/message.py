@@ -25,6 +25,7 @@ def response(val, key,data):
         'Error': {
             'mobileError': 'Mobile Number already exists. Please use a different mobile number.',
             'loginError':'Login failed',
+            'turfAdminLoginError':'Invalid email or password',
             'noResult': 'No Result Found',
             'postMethod': 'Use the POST method',
             'putMethod': 'Use the PUT method',
@@ -36,8 +37,6 @@ def response(val, key,data):
     
     if val == 'Success' and data is not None:
         return handleSuccessData(key_value_mapping[val][key],data)
-    elif val == 'Success' and data is None:
-        return handleSuccessMessage(key_value_mapping[val][key])
     else:
         return errorResponse(key_value_mapping[val][key])
 

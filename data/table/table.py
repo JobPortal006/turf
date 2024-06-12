@@ -5,12 +5,6 @@ from ..sqlalchemyConfig import DATABASE_URL
 
 Base = declarative_base()
 
-class Login(Base):
-    __tablename__ = 'login'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    email = Column(String(50), nullable=False)
-    password = Column(String(50), nullable=False)
-
 class Roles(Base):
     __tablename__ = 'roles'
     roleId = Column(Integer, primary_key=True, autoincrement=True)
@@ -19,14 +13,15 @@ class Roles(Base):
 class User(Base):
     __tablename__ = 'user'
     userId = Column(Integer, primary_key=True, autoincrement=True)
-    roleId = Column(Integer, ForeignKey('role.roleId'), nullable=False)
-    userName = Column(String(50), nullable=True)
-    password = Column(String(50), nullable=True)
+    roleId = Column(Integer, ForeignKey('roles.roleId'), nullable=False)
+    firstName = Column(String(50), nullable=True)
+    lastName = Column(String(50), nullable=True)
     email = Column(String(100),nullable=True)
-    profilePhoto = Column(String(50),nullable=True)
+    password = Column(String(50), nullable=True)
+    profilePhoto = Column(String(50),nullable=True)  
     mobileNumber = Column(String(15) , nullable=True)
     
-    role = relationship("Role")
+    roles = relationship("Roles")
 
 class Location(Base):
     __tablename__ = 'location'
@@ -156,7 +151,29 @@ Base.metadata.create_all(engine)
 # Create a session
 Session = sessionmaker(bind=engine)
 session = Session()
-    
+
+# Insert initial roles if they don't already exist
+initial_roles = ["User", "Product Admin", "Turf Admin"]
+
+# Check if roles already exist in the table
+existing_roles = session.query(Roles).filter(Roles.role.in_(initial_roles)).all()
+existing_role_names = [role.role for role in existing_roles]
+
+# Insert only the roles that do not already exist
+# Initialize an empty list to store roles that need to be added
+roles_to_add = []
+
+# Loop through each role in the initial_roles list
+for role in initial_roles:
+    # Check if the role is not in the existing_role_names list
+    if role not in existing_role_names:
+        # Create a new Roles instance
+        new_role = Roles(role=role)
+        
+        # Add the new Roles instance to the roles_to_add list
+        roles_to_add.append(new_role)
+session.add_all(roles_to_add)
+
 # Commit the changes   
 session.commit()
 

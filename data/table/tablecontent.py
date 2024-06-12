@@ -4,7 +4,8 @@ TABLES = [
         'columns': {
             'userId': 'userId',
             'roleId': 'roleId',
-            'userName': 'userName',
+            'firstName': 'firstName',
+            'lastName':'lastName',
             'password': 'password',
             'email': 'email',
             'profilePhoto': 'profilePhoto',

@@ -42,7 +42,7 @@ def userRegisterSelectQuery(token):
         if user:
             response = {
                 "userId": user.userId,
-                "roleId": user.roleId,
+                "roleId": "user.roleId",
                 "mobileNumber": user.mobileNumber
             }
         else:
@@ -67,7 +67,7 @@ def userRegisterUpdateQuery(userName, mobileNumber, token):
         user.mobileNumber = mobileNumber
         session.commit()
 
-        jwtTokenEncode = jwtToken.jwtTokenEncode(user.userId, user.roleId, user.mobileNumber)
+        jwtTokenEncode = "jwtToken.jwtTokenEncode(user.userId, user.roleId, user.mobileNumber)"
         return jwtTokenEncode
     except Exception as e:
         session.rollback()

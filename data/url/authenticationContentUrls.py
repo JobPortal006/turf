@@ -1,5 +1,5 @@
 from django.urls import path
-from data.content import loginContent, forgetPasswordContent, otpVerificationContent, changePasswordContent
+from data.content import loginContent, forgetPasswordContent, otpVerificationContent, changePasswordContent, userProfileDetailsContent
 
 urlpatterns = [
     # Endpoint for login content
@@ -12,5 +12,8 @@ urlpatterns = [
     path('otpVerificationContent/', otpVerificationContent.getOTPVerificationFields, name='otpVerificationContent'), 
 
     # Endpoint for change password content
-    path('changePasswordContent/', changePasswordContent.getChangePasswordFields, name='changePasswordContent')
+    path('changePasswordContent/', changePasswordContent.getChangePasswordFields, name='changePasswordContent'),
+
+     # Endpoint for User Profile content
+    path('userProfileContent/', userProfileDetailsContent.getProfileDetails, name='userProfileContent')
 ]

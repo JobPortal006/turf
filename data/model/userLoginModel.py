@@ -15,19 +15,14 @@ def userLoginModel(mobileNumber):
     session = Session()
     try:
         # Get table info for 'role' and 'user'
-        role_table = get_table_info('role')
+        role_table = get_table_info('roles')
         user_table = get_table_info('user')
-
-        if not role_table or not user_table:
-            raise ValueError("Table information not found in TABLES")
 
         role_columns = role_table['columns']
         user_columns = user_table['columns']
+        
         # Check if the role 'User' exists
         role = session.query(Roles).filter_by(**{role_columns['role']: 'User'}).first()
-        
-        if not role:
-            raise ValueError("Role 'User' not found")
 
         roleId = getattr(role, role_columns['roleId'])
         role_name = getattr(role, role_columns['role'])
@@ -48,7 +43,7 @@ def userLoginModel(mobileNumber):
             # Return success message
             return userId, role_name, mobileNumber
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"userLoginModel Error: {e}")
         session.rollback()
         return message.tryExceptError(str(e))
     finally:
