@@ -1,17 +1,18 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from ..model.userLoginModel import userLoginModel
+from ..model.turfRegisterModel import userLoginModel
 from data import message,jwtToken
 
 @csrf_exempt
 def turfAdminLogin(request):
   if request.method == 'POST':
     data = json.loads(request.body)
-    mobileNumber = data.get('mobileNumber')
-    print(mobileNumber)
+    email = data.get('email')
+    password = data.get('password')
+    print(email,password)
     try:
-      userId, role, mobileNumber = userLoginModel(mobileNumber)
+      userId, role, mobileNumber = turfAdminLoginModel(mobileNumber)
       # Generate JWT token
       jwtTokenEn = jwtToken.jwtTokenEncode(userId, role, mobileNumber)
       print("User Login jwtTokenEn ------>",jwtTokenEn)
