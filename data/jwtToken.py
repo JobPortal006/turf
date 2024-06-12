@@ -4,7 +4,7 @@ import datetime
 secret_key = 'turf123'
 
 # Encode ----- Token
-def jwtTokenEncode(userId, role, mobileNumber):
+def jwtTokenEncode(userId, role):
     try:
         exp_time = datetime.datetime.utcnow() + datetime.timedelta(days=1)
         # Convert the datetime object to a UNIX timestamp
@@ -13,7 +13,6 @@ def jwtTokenEncode(userId, role, mobileNumber):
         payload = {
             'userId': userId,
             'role': role,
-            'mobileNumber': mobileNumber,
             'exp': exp_timestamp
         }
         token = jwt.encode(payload, secret_key, algorithm='HS256')

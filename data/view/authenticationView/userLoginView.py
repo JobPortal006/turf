@@ -1,8 +1,8 @@
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from ..model.userLoginModel import userLoginModel
+from ...model.authenticationModel.userLoginModel import userLoginQuery
 from data import message,jwtToken
+from data.table import tablecontent
 
 @csrf_exempt
 def userLogin(request):
@@ -10,10 +10,13 @@ def userLogin(request):
     data = json.loads(request.body)
     mobileNumber = data.get('mobileNumber')
     try:
-      userId, role, mobileNumber = userLoginModel(mobileNumber)
-      print("User Login details ------>",userId, role, mobileNumber)
+      # Get table info for 'role' and 'user'
+      role_table = tablecontent.get_table_info('roles')
+      user_table = tablecontent.get_table_info('user')
+      userId, role = userLoginQuery(mobileNumber,role_table,user_table)
+      print("User Login details ------>",userId, role)
       # Generate JWT token
-      jwtTokenEn = jwtToken.jwtTokenEncode(userId, role, mobileNumber)
+      jwtTokenEn = jwtToken.jwtTokenEncode(userId, role)
       if userId is not None:
         return message.response('Success','login',jwtTokenEn)  
       else:
@@ -21,4 +24,4 @@ def userLogin(request):
     except Exception as e:
       print(f"User Login Exception : {str(e)}")
       return message.tryExceptError(str(e))
-  return message.response('Error','postMethod',jwtTokenEn)
+  return message.responseMessage('Error','postMethod')

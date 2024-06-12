@@ -20,6 +20,17 @@ TABLES = [
         }
     },
     {
+        'tableName': 'location',
+        'columns': {
+            'locationId': 'locationId',
+            'doorNo': 'location',
+            'street':'street',
+            'city':'city',
+            'state':'state',
+            'pincode':'pincode'
+        }
+    },
+    {
         'tableName': 'userSportsInterest',
         'columns': {
             'userSportsInterestId': 'userSportsInterestId',
@@ -124,3 +135,10 @@ TABLES = [
         }
     }
 ]
+
+
+def get_table_info(table_name):
+    for table in TABLES:
+        if table['tableName'] == table_name:
+            return table
+    return None
