@@ -2,12 +2,12 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from ...model.authenticationModel import forgetPasswordModel
 from data import message,jwtToken
-from ...table import tablecontent
+from ...table import tableContent
 
 globalemail = ""
 # Get table info for 'user'
-user_table = tablecontent.get_table_info('user')
-role_table = tablecontent.get_table_info('roles')
+user_table = tableContent.get_table_info('user')
+role_table = tableContent.get_table_info('roles')
 
 @csrf_exempt
 def forgetPassword(request):

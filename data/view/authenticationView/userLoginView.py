@@ -2,7 +2,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from ...model.authenticationModel.userLoginModel import userLoginQuery
 from data import message,jwtToken
-from data.table import tablecontent
+from data.table import tableContent
 
 @csrf_exempt
 def userLogin(request):
@@ -11,8 +11,8 @@ def userLogin(request):
     mobileNumber = data.get('mobileNumber')
     try:
       # Get table info for 'role' and 'user'
-      role_table = tablecontent.get_table_info('roles')
-      user_table = tablecontent.get_table_info('user')
+      role_table = tableContent.get_table_info('roles')
+      user_table = tableContent.get_table_info('user')
       userId, role = userLoginQuery(mobileNumber,role_table,user_table)
       print("User Login details ------>",userId, role)
       # Generate JWT token
