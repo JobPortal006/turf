@@ -28,6 +28,17 @@ TABLES = [
         }
     },
     {
+        'tableName': 'location',
+        'columns': {
+            'locationId': 'locationId',
+            'doorNo': 'location',
+            'street':'street',
+            'city':'city',
+            'state':'state',
+            'pincode':'pincode'
+        }
+    },
+    {
         'tableName': 'turfType',
         'columns': {
             'turfTypeId': 'turfTypeId',

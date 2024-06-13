@@ -2,8 +2,8 @@ from django.http import JsonResponse
 import os
 
 #dynamic success response
-def handleSuccess(success):
-    return JsonResponse({"status": True, "statusCode": 200, "message": success},safe=False)
+def handleSuccess(success,data):
+    return JsonResponse({"status":True,"statusCode":200,"message":success,"token":data})
 
 #dynamic error response
 def errorResponse(error):
@@ -13,30 +13,31 @@ def errorResponse(error):
 def serverErrorResponse():
     return  JsonResponse({"status":False,"statusCode":500,"message":"Internal Server Error"})
 
-def response(val, key):
+def response(val, key,data):
     key_value_mapping = {
         'Success': {
-            'Signup': 'Signup Successfully',
-            'Login': 'Login Successfully',
+            'login': 'Login Successfully',
             'userDelete': 'Delete Successfully',
+            'forgetPassword': 'Email sent Successfully',
+            'passwordUpdate':'Password Updated Successfully'
         },
         'Error': {
             'mobileError': 'Mobile Number already exists. Please use a different mobile number.',
+            'loginError':'Login failed',
+            'turfAdminLoginError':'Invalid email or password',
+            'forgetPasswordError': 'Email is not registered',
+            'passwordUpdateError':'Password is not Updated',
             'noResult': 'No Result Found',
-            'postMethod': 'Use the POST method',
             'putMethod': 'Use the PUT method',
             'getMethod': 'Use the GET method',
             'deleteMethod': 'Use the DELETE method',
-            'emptyValue':'Value is None',  
+            'emptyValue':'Value is None',
         }
     }
-    
-    if val == 'Success':
-        return handleSuccess(key_value_mapping[val][key])
+    if val == 'Success' and data is not None:
+        return handleSuccess(key_value_mapping[val][key],data)
     else:
         return errorResponse(key_value_mapping[val][key])
-
-
 
 def tryExceptError(message):
     # List of error messages that trigger server reload
@@ -57,10 +58,3 @@ def tryExceptError(message):
 def serverReload():
     manage_py_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'manage.py')
     os.utime(manage_py_path, None)
-
-
-def check(*args):
-    for i in args:
-        if i == '' or i is None:
-            return False
-    return True

@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from ..table.table import Role, User, TurfDetails, UserTurfMapping
+from ..table.table import Roles, User, TurfDetails, UserTurfMapping
 from ..sqlalchemyConfig import DATABASE_URL
 
 engine = create_engine(DATABASE_URL)
@@ -10,7 +10,7 @@ def create_user_and_turf(data):
     session = Session()
     try:
         roleName = "Turf Admin"
-        role = session.query(Role).filter(Role.role == roleName).first()
+        role = session.query(Roles).filter(Roles.role == roleName).first()
 
         new_user = User(
             roleId=role.roleId,

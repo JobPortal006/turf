@@ -17,7 +17,7 @@ class User(Base):
     firstName = Column(String(50), nullable=True)
     lastName = Column(String(50), nullable=True)
     email = Column(String(100),nullable=True)
-    password = Column(String(50), nullable=True)
+    password = Column(String(255), nullable=True)
     profilePhoto = Column(String(50),nullable=True)  
     mobileNumber = Column(String(15) , nullable=True)
     
