@@ -15,7 +15,7 @@ def addNewUserQuery(role,email, password,role_table,user_table):
 
         roleId = getattr(role, role_columns['roleId'])
         role_name = getattr(role, role_columns['role'])
-        print("turfAdminLoginQuery Role ID:", roleId)
+        print("addNewUserQuery Role ID:", roleId)
         
         # Check if the email and password match an existing user with the 'Turf Admin' role
         user = session.query(User).filter_by(
