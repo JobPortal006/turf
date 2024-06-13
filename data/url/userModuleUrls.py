@@ -1,8 +1,10 @@
 from django.urls import path
 from data.view import userRegisterView
 from ..view.userRegisterView import userRegistersInsert,userRegisterSelect
-from ..view.authenticationView.userLoginView import userLogin
 
+from ..view import userDynamic
+
+from ..view.authenticationView.userLoginView import userLogin
 urlpatterns = [
     # Endpoint for user registration
    path('userLogin/',userLogin),
@@ -12,4 +14,12 @@ urlpatterns = [
     path('userRegisterSelect/',userRegisterView.userRegisterSelect),
     # path('userRegisterUpdate/',userRegisterView.userRegisterUpdate),
     # path('userRegisterDelete/',userRegisterView.userRegisterDelete),
+    
+    
+    
+    # Registeration 
+    path('userDynamic/',userDynamic.userDynamicInsert),
+    
+    
+    
 ]

@@ -2,7 +2,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from data.model.authenticationModel.addNewUserModel import addNewUserQuery
 from data import message,jwtToken
-from data.table import tablecontent
+from data.table import tableContent
 
 @csrf_exempt
 def addNewUser(request):
@@ -13,8 +13,8 @@ def addNewUser(request):
     password = data.get('password')
     try:
       # Get table info for 'role' and 'user'
-      role_table = tablecontent.get_table_info('roles')
-      user_table = tablecontent.get_table_info('user')
+      role_table = tableContent.get_table_info('roles')
+      user_table = tableContent.get_table_info('user')
       userId, role = addNewUserQuery(role,email,password,role_table,user_table)
       print("Add New User details ------>",userId, role)
       # Generate JWT token

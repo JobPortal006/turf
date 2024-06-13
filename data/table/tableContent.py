@@ -1,5 +1,5 @@
 TABLES = [
-    {
+    { 
         'tableName': 'user',
         'columns': {
             'userId': 'userId',
@@ -20,6 +20,14 @@ TABLES = [
         }
     },
     {
+        'tableName': 'userSportsInterest',
+        'columns': {
+            'userSportsInterestId': 'userSportsInterestId',
+            'userId': 'userId',
+            'gameTypeId': 'gameTypeId'
+        }
+    },
+    {
         'tableName': 'location',
         'columns': {
             'locationId': 'locationId',
@@ -28,14 +36,6 @@ TABLES = [
             'city':'city',
             'state':'state',
             'pincode':'pincode'
-        }
-    },
-    {
-        'tableName': 'userSportsInterest',
-        'columns': {
-            'userSportsInterestId': 'userSportsInterestId',
-            'userId': 'userId',
-            'gameTypeId': 'gameTypeId'
         }
     },
     {
