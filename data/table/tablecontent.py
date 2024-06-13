@@ -1,5 +1,5 @@
 TABLES = [
-    {
+    { 
         'tableName': 'user',
         'columns': {
             'userId': 'userId',
