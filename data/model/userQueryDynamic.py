@@ -1,48 +1,45 @@
 from django.http import JsonResponse
-from data import message , jwtToken
+from data import message
+from data.table import tableContent
+from ..table.table import User
+from ..sqlalchemyConfig import DATABASE_URL
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-from django.db import connection
-from data import message 
+# Create the SQLAlchemy engine and session
+engine = create_engine(DATABASE_URL)
+Session = sessionmaker(bind=engine)
 
-con = connection.cursor()
-
-def userRegisterInsertDynamic(roleTable,userTable,roleType,userName,mobileNumber,profilePhoto):
+def userRegisterInsertDynamic(firstName, lastName, mobileNumber, email, profilePhoto, userSportsInterest):
     try:
-        con = connection.cursor()
+        session = Session()  # Start a new session
+        userId = 1  # Assuming you have the userId
         
-        # get roleId in role table 
-        roleId = roleTable["role"]["fields"]["roleId"]
-        roleTableName = roleTable["role"]["tableName"]
-        role = roleTable["role"]["fields"]["role"]
+        # Get user table information
+        userTable = tableContent.get_table_info('user')  # Correct function call
+        userColumns = userTable['columns']
         
-        
-        
-        con.execute(f"select {roleId} from  {roleTableName} where {role} = %s",[roleType])
-        
-        # query = f"SELECT {roleId} FROM {roleTableName} WHERE {role} = %s"
-        # parameters = [roleType]
-        # con.execute(query, parameters)
-        
-        result = con.fetchone()
-        roleId = result[0]
-        print("Role ID:", roleId)
-       
-        con.execute("select * from user where mobileNumber = %s", [mobileNumber])
-        userResult = con.fetchone()
-        if userResult:
-            return False
-            
-        else:
-            sql = "INSERT INTO user(roleId, userName,  mobileNumber) VALUES (%s , %s, %s)"
-            values = (roleId,userName,mobileNumber)
-            con.execute(sql, values) 
-            userId = con.lastrowid
+        # print("User Table Information:", userTable)
 
-            jwtTokenEn = jwtToken.jwtTokenEncode(userId,roleId,mobileNumber)
-             
-            con.close()
-        return jwtTokenEn
+        # Check if user with userId exists
+        existing_user = session.query(User).filter_by(userId=userId).first()
+
+        if existing_user:
+            # User exists, update the existing user
+            setattr(existing_user, userColumns['firstName'], firstName)
+            setattr(existing_user, userColumns['lastName'], lastName)  # Added lastName
+            setattr(existing_user, userColumns['email'], email)
+            setattr(existing_user, userColumns['profilePhoto'], profilePhoto)
+            session.commit()  # Commit the transaction
+            return {"status": "success", "message": "User inserted successfully"}
+        else:
+            # User does not exist, so we create a new one
+            
+              # Commit the transaction
+            return {"status": "success", "message": "User Exited"}
+
     except Exception as e:
-        print(f"Error: {e}")
-        con.close()
-        return message.handleSuccess( "Error occurred during insertion")
+        return JsonResponse({"status": "error", "message": str(e)}, safe=False)
+
+    finally:
+        session.close()  # Close the session
